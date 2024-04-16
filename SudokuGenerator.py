@@ -17,58 +17,43 @@ class SudokuGenerator:
             print(row)
 
     def valid_in_row(self, row, num):
-        self.row = row
-        self.num = num
-        return False if self.num in self.board[self.row] else True
+        return False if num in self.board[row] else True
 
     def valid_in_col(self, col, num):
-        self.col = col
-        self.num = num
         for row in self.board:
             if row[col] == num:
                 return False
         return True
 
     def valid_in_box(self, row_start, col_start, num):
-        self.row_start = row_start
-        self.col_start = col_start
-        self.num = num
-
-        box = [self.board[self.row_start][self.col_start:self.col_start + 3]
-               + self.board[self.row_start + 1][self.col_start:self.col_start + 3]
-               + self.board[self.row_start + 2][self.col_start:self.col_start + 3]]
+        box = [self.board[row_start][col_start:col_start + 3]
+               + self.board[row_start + 1][col_start:col_start + 3]
+               + self.board[row_start + 2][col_start:col_start+ 3]]
         for value in box:
             for number in value:
-                if number == self.num:
+                if number == num:
                     return False
         return True
 
     def is_valid(self, row, col, num):
-        self.row = row
-        self.col = col
-        self.num = num
-
-        if not self.valid_in_row(self.row, self.num):
+        if not self.valid_in_row(row, num):
             return False
-        if not self.valid_in_col(self.col, self.num):
+        if not self.valid_in_col(col, num):
             return False
-        if self.row % 3 != 0 or self.col % 3 != 0:
-            self.row = self.row - self.row % 3
-            self.col = self.col - self.col % 3
-            if not self.valid_in_box(self.row, self.col, self.num):
+        if row % 3 != 0 or col % 3 != 0:
+            row = row - row % 3
+            col = col - col % 3
+            if not self.valid_in_box(row, col, num):
                 return False
         return True
 
     def fill_box(self, row_start, col_start):
-        self.row_start = row_start
-        self.col_start = col_start
-
         numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
         box = []
 
-        box.append(self.board[self.row_start][self.col_start:self.col_start + 3])
-        box.append(self.board[self.row_start + 1][self.col_start:self.col_start + 3])
-        box.append(self.board[self.row_start + 2][self.col_start:self.col_start + 3])
+        box.append(self.board[row_start][col_start:col_start + 3])
+        box.append(self.board[row_start + 1][col_start:col_start + 3])
+        box.append(self.board[row_start + 2][col_start:col_start + 3])
 
         for i, row in enumerate(box):
             for j, item in enumerate(row):
@@ -78,7 +63,7 @@ class SudokuGenerator:
 
         for i, row in enumerate(box):
             for j, item in enumerate(row):
-                self.board[self.row_start+i][self.col_start+j] = box[i][j]
+                self.board[row_start+i][col_start+j] = box[i][j]
 
     def fill_diagonal(self):
         self.fill_box(0, 0)
