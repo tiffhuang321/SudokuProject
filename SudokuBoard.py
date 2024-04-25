@@ -2,6 +2,9 @@ import pygame
 
 from SudokuGenerator import SudokuGenerator
 
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+GRAY = (200, 200, 200)
 
 class Cell:
     def __init__(self, value, row, col, screen):
@@ -49,7 +52,7 @@ class Board:
         self.screen = screen
         self.difficulty = difficulty
 
-        self.generator = SudokuGenerator(width, height, difficulty)
+        self.generator = SudokuGenerator(width, height)
         self.board = self.generator.get_board()
 
     def draw(self):
