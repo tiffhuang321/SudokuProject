@@ -1,6 +1,7 @@
 import random
 
 
+
 # initiate sudoku board with generate_sudoku() at end of file
 class SudokuGenerator:
     def __init__(self, row_length, removed_cells):
@@ -121,3 +122,5 @@ def generate_sudoku(size, removed):
     sudoku.remove_cells()
     board = sudoku.get_board()
     return board
+
+
