@@ -1,7 +1,6 @@
 import random
 
 
-
 # initiate sudoku board with generate_sudoku() at end of file
 class SudokuGenerator:
     def __init__(self, row_length, removed_cells):
@@ -9,11 +8,6 @@ class SudokuGenerator:
         self.row_length = row_length
         self.board = [["-" for x in range(9)] for y in range(9)]
         self.box_length = 3
-
-        self.removed_true_values = {}
-
-    def get_true_values(self):
-        return self.removed_true_values
 
     def get_board(self):
         return self.board
@@ -23,14 +17,11 @@ class SudokuGenerator:
             print(row)
 
     def valid_in_row(self, row, num):
-        for i in range(self.row_length):
-            if self.board[row][i] == num:
-                return False
-        return True
+        return False if num in self.board[row] else True
 
     def valid_in_col(self, col, num):
-        for i in range(self.row_length):
-            if self.board[i][col] == num:
+        for row in self.board:
+            if row[col] == num:
                 return False
         return True
 
@@ -123,12 +114,20 @@ class SudokuGenerator:
                 zero += 1
 
 
-    def generate_sudoku(size, removed):
-        sudoku = SudokuGenerator(size, removed)
-        sudoku.fill_values()
-        board = sudoku.get_board()
-        sudoku.remove_cells()
-        board = sudoku.get_board()
-        return board
+def generate_sudoku(size, removed):
+    sudoku = SudokuGenerator(size, removed)
+    sudoku.fill_values()
+    board = sudoku.get_board()
+
+    # variable subject to change
+    # do not include in final submission
+    ans_board = [rows[:]for rows in sudoku.get_board()]
+
+    sudoku.remove_cells()
+    board = sudoku.get_board()
+
+    # return statement subject to change
+    # remove ans_board in final submission
+    return ans_board, board
 
 
