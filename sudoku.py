@@ -145,7 +145,7 @@ def main():
                 if event.key == pygame.K_BACKSPACE:
                     board.clear()
                     board.draw()
-                if event.key == pygame.K_c:
+                if event.key == pygame.K_c: # placeholder key for testing function, feel free to change
                     board.reset_to_original()
                     board.draw()
 
