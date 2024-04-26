@@ -75,12 +75,13 @@ def game_start(welcomeScreen):
 
 # win game screen
 def display_win(screen):
-    screen.fill("green")
+    green = (163, 250, 163)
+    screen.fill(green)
 
     winFont = pygame.font.Font(None, 75)
     winMessage = winFont.render("Game Won!", True, "black")
     winRect = winMessage.get_rect()
-    winRect.centerx = 225
+    winRect.centerx = 320
     winRect.centery = 180
     screen.blit(winMessage, winRect)
 
@@ -90,9 +91,9 @@ def display_lose(screen):
     screen.fill(red)
 
     loseFont = pygame.font.Font(None, 75)
-    loseMessage = loseFont.render("You lose!", True, "black")
+    loseMessage = loseFont.render("Game Over :(", True, "black")
     loseRect = loseMessage.get_rect()
-    loseRect.centerx = 225
+    loseRect.centerx = 320
     loseRect.centery = 180
     screen.blit(loseMessage, loseRect)
 
