@@ -150,7 +150,7 @@ def main():
                     board.draw()
 
                 '''
-                NOTE: check_board function not yet implemented
+                NOTE: check_board function not yet utilized
                 '''
 
                 # set the selected cell sketched value = to the user input
