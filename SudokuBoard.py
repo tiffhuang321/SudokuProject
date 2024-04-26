@@ -116,8 +116,8 @@ class Board:
             for j, cell in enumerate(row):
                 if self.cells[i][j].get_cell_value() != self.unsolved_board[i][j]:
                     self.selected_cell.set_cell_value(0)
-        self.selected_cell.set_sketched_value(None)
-        self.update_board()
+                    self.selected_cell.set_sketched_value(None)
+                    self.update_board()
 
     def sketch(self, value):
         self.selected_cell.set_sketched_value(value)
@@ -125,9 +125,9 @@ class Board:
         self.selected_cell.draw()
 
     # cannot place number when there is no initial sketched value
-    def place_number(self, value):
+    def place_number(self):
         if self.selected_cell.sketched_value:
-            self.selected_cell.set_cell_value(value)
+            self.selected_cell.set_cell_value(self.selected_cell.sketched_value)
             self.update_board()
 
     def reset_to_original(self):
