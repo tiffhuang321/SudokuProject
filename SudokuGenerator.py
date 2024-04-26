@@ -10,6 +10,11 @@ class SudokuGenerator:
         self.board = [["-" for x in range(9)] for y in range(9)]
         self.box_length = 3
 
+        self.removed_true_values = {}
+
+    def get_true_values(self):
+        return self.removed_true_values
+
     def get_board(self):
         return self.board
 
@@ -18,11 +23,14 @@ class SudokuGenerator:
             print(row)
 
     def valid_in_row(self, row, num):
-        return False if num in self.board[row] else True
+        for i in range(self.row_length):
+            if self.board[row][i] == num:
+                return False
+        return True
 
     def valid_in_col(self, col, num):
-        for row in self.board:
-            if row[col] == num:
+        for i in range(self.row_length):
+            if self.board[i][col] == num:
                 return False
         return True
 
@@ -115,12 +123,12 @@ class SudokuGenerator:
                 zero += 1
 
 
-def generate_sudoku(size, removed):
-    sudoku = SudokuGenerator(size, removed)
-    sudoku.fill_values()
-    board = sudoku.get_board()
-    sudoku.remove_cells()
-    board = sudoku.get_board()
-    return board
+    def generate_sudoku(size, removed):
+        sudoku = SudokuGenerator(size, removed)
+        sudoku.fill_values()
+        board = sudoku.get_board()
+        sudoku.remove_cells()
+        board = sudoku.get_board()
+        return board
 
 
