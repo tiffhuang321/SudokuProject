@@ -1,6 +1,5 @@
 # imports
-import pygame
-import sys
+import pygame, sys
 from SudokuBoard import *
 from SudokuGenerator import *
 
@@ -18,7 +17,7 @@ def game_start(welcomeScreen):
     # initialize pygame window - 450 x 450 - name it
 
     # start screen + welcome
-    welcomeScreen.fill("lightYellow")
+    welcomeScreen.fill((225, 250, 245))
     welcomeFont = pygame.font.Font(None, 50)
 
     # welcome button
@@ -103,8 +102,9 @@ def main():
     global difficulty
 
     # create screen
-    screen = pygame.display.set_mode((630, 630))
+    screen = pygame.display.set_mode((630, 700))
     pygame.display.set_caption("Sudoku Game")
+    screen.fill((225, 250, 245))
 
     # call game start function - get difficulty value
     game_start(screen)
@@ -116,9 +116,30 @@ def main():
     board = Board(630, 630, screen, difficulty)
     board.draw()
 
+
     # keep board running loop
 
     while True:
+
+        button_font = pygame.font.Font(None, 50)
+
+        reset_surf = button_font.render("RESET", True, (40, 120, 100), "white")
+        resetRect = reset_surf.get_rect(center=(630//6, 670))
+        screen.blit(reset_surf, resetRect)
+        '''
+        resetRect = reset_surf.get_rect()
+        resetRect.centerx = 630 // 6
+        resetRect.centery = 670
+        screen.blit(reset_surf, resetRect)
+        '''
+        restart_surf = button_font.render("RESTART", True, (40, 120, 100), "white")
+        restartRect = restart_surf.get_rect(center=(630 // 2, 670))
+        screen.blit(restart_surf, restartRect)
+
+        exit_surf = button_font.render("EXIT", True, (40, 120, 100), "white")
+        exitRect = exit_surf.get_rect(center=(630 // 6 * 5, 670))
+        screen.blit(exit_surf, exitRect)
+
         for event in pygame.event.get():
 
             # if Xed out, quit
@@ -131,8 +152,19 @@ def main():
                 x, y = event.pos
                 # row and col set from x and y
                 # redraw the board each time the user selects a cell to redraw the cell's rectangle
+                '''if resetRect.collidepoint(event.pos): ---> 
+                    board.reset_to_original()
+                    return
+                '''
+                if restartRect.collidepoint(event.pos):
+                    main()
+                    return
+                if exitRect.collidepoint(event.pos):
+                    sys.exit()
+
                 board.draw()
                 board.click(x, y)
+
             # if key press
             if event.type == pygame.KEYDOWN:
                 for i in range(1, 10):
@@ -163,10 +195,28 @@ def main():
                     if board.check_board():
                         print(222)
                         display_win(screen)
-                        #pygame.quit()
+
+                        '''exit_surf = button_font.render("EXIT", True, (255, 255, 255), (40, 120, 100))
+                        exitRect = exit_surf.get_rect(center=(630 // 6 * 5, 670))
+                        screen.blit(exit_surf, exitRect)
+                        '''
+                        if event.type == pygame.MOUSEBUTTONDOWN:
+                            x, y = event.pos
+                            if exitRect.collidepoint(event.pos):
+                                sys.exit()
                     else:
                         print(333)
                         display_lose(screen)
+                        '''
+                        restart_surf = button_font.render("RESTART", True, (255, 255, 255), (40, 120, 100))
+                        restartRect = restart_surf.get_rect(center=(630 // 2, 670))
+                        screen.blit(restart_surf, restartRect)
+                        '''
+                        if event.type == pygame.MOUSEBUTTONDOWN:
+                            x, y = event.pos
+                            if restartRect.collidepoint(event.pos):
+                                main()
+                                return
                         #pygame.quit()
                 else:
                     print(444)

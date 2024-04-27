@@ -69,16 +69,16 @@ class Board:
         self.selected_cell = None
 
     def draw(self):
-        self.screen.fill((255, 255, 245))
+        self.screen.fill((225, 250, 245))
         # draw horizontal lines
-        for i in range(1, 9):
+        for i in range(1, 10):
             if i % 3 == 0:
                 pygame.draw.line(self.screen, BLACK, (0, i * CELL_SIZE), (630, i * CELL_SIZE), 2)
             else:
                 pygame.draw.line(self.screen, BLACK, (0, i * CELL_SIZE), (630, i * CELL_SIZE))
 
         # draw vertical lines
-        for i in range(1, 9):
+        for i in range(1, 10):
             if i % 3 == 0:
                 pygame.draw.line(self.screen, BLACK, (i * CELL_SIZE, 0), (i * CELL_SIZE, 630), 2)
             else:
