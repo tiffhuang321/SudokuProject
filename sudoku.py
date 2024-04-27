@@ -84,6 +84,7 @@ def display_win(screen):
     winRect.centery = 180
     screen.blit(winMessage, winRect)
 
+
 # lose game screen
 def display_lose(screen):
     red = (255, 158, 158)
@@ -95,6 +96,7 @@ def display_lose(screen):
     loseRect.centerx = 320
     loseRect.centery = 180
     screen.blit(loseMessage, loseRect)
+
 
 
 def main():
@@ -115,36 +117,37 @@ def main():
 
     board = Board(630, 630, screen, difficulty)
     board.draw()
-
+    buttons = True
 
     # keep board running loop
 
     while True:
+        if buttons:
+            button_font = pygame.font.Font(None, 50)
 
-        button_font = pygame.font.Font(None, 50)
+            reset_surf = button_font.render("RESET", True, "black", "white")
+            resetRect = reset_surf.get_rect(center=(630//6, 670))
+            screen.blit(reset_surf, resetRect)
+            '''
+            resetRect = reset_surf.get_rect()
+            resetRect.centerx = 630 // 6
+            resetRect.centery = 670
+            screen.blit(reset_surf, resetRect)
+            '''
+            restart_surf = button_font.render("RESTART", True, "black", "white")
+            restartRect = restart_surf.get_rect(center=(630 // 2, 670))
+            screen.blit(restart_surf, restartRect)
 
-        reset_surf = button_font.render("RESET", True, "black", "white")
-        resetRect = reset_surf.get_rect(center=(630//6, 670))
-        screen.blit(reset_surf, resetRect)
-        '''
-        resetRect = reset_surf.get_rect()
-        resetRect.centerx = 630 // 6
-        resetRect.centery = 670
-        screen.blit(reset_surf, resetRect)
-        '''
-        restart_surf = button_font.render("RESTART", True, "black", "white")
-        restartRect = restart_surf.get_rect(center=(630 // 2, 670))
-        screen.blit(restart_surf, restartRect)
-
-        exit_surf = button_font.render("EXIT", True, "black", "white")
-        exitRect = exit_surf.get_rect(center=(630 // 6 * 5, 670))
-        screen.blit(exit_surf, exitRect)
+            exit_surf = button_font.render("EXIT", True, "black", "white")
+            exitRect = exit_surf.get_rect(center=(630 // 6 * 5, 670))
+            screen.blit(exit_surf, exitRect)
 
         for event in pygame.event.get():
 
             # if Xed out, quit
             if event.type == pygame.QUIT:
                 pygame.quit()
+                sys.exit()
 
             # if mouse click
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -161,7 +164,6 @@ def main():
                 elif restartRect.collidepoint(event.pos):
                     main()
                     continue
-
 
                 elif exitRect.collidepoint(event.pos):
                     sys.exit()
@@ -195,32 +197,36 @@ def main():
 
                 # check if the board is full
                 if board.is_full():
-                    print(111)
+                    buttons = False
                     if board.check_board():
-                        print(222)
                         display_win(screen)
 
-                        '''exit_surf = button_font.render("EXIT", True, (255, 255, 255), (40, 120, 100))
-                        exitRect = exit_surf.get_rect(center=(630 // 6 * 5, 670))
+                        button_font = pygame.font.Font(None, 50)
+
+                        exit_surf = button_font.render("EXIT", True, "black", "white")
+                        exitRect = exit_surf.get_rect(center=(630 // 2, 630//2))
                         screen.blit(exit_surf, exitRect)
-                        '''
+
                         if event.type == pygame.MOUSEBUTTONDOWN:
                             x, y = event.pos
                             if exitRect.collidepoint(event.pos):
+                                pygame.quit()
                                 sys.exit()
+
                     else:
-                        print(333)
                         display_lose(screen)
-                        '''
-                        restart_surf = button_font.render("RESTART", True, (255, 255, 255), (40, 120, 100))
-                        restartRect = restart_surf.get_rect(center=(630 // 2, 670))
+
+                        button_font = pygame.font.Font(None, 50)
+
+                        restart_surf = button_font.render("RESTART", True, "black", "white")
+                        restartRect = restart_surf.get_rect(center=(630 // 2, 630 // 2))
                         screen.blit(restart_surf, restartRect)
-                        '''
+
                         if event.type == pygame.MOUSEBUTTONDOWN:
                             x, y = event.pos
                             if restartRect.collidepoint(event.pos):
                                 main()
-                                return
+                                continue
                         #pygame.quit()
                 else:
                     print(444)
