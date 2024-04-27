@@ -123,7 +123,7 @@ def main():
 
         button_font = pygame.font.Font(None, 50)
 
-        reset_surf = button_font.render("RESET", True, (40, 120, 100), "white")
+        reset_surf = button_font.render("RESET", True, "black", "white")
         resetRect = reset_surf.get_rect(center=(630//6, 670))
         screen.blit(reset_surf, resetRect)
         '''
@@ -132,11 +132,11 @@ def main():
         resetRect.centery = 670
         screen.blit(reset_surf, resetRect)
         '''
-        restart_surf = button_font.render("RESTART", True, (40, 120, 100), "white")
+        restart_surf = button_font.render("RESTART", True, "black", "white")
         restartRect = restart_surf.get_rect(center=(630 // 2, 670))
         screen.blit(restart_surf, restartRect)
 
-        exit_surf = button_font.render("EXIT", True, (40, 120, 100), "white")
+        exit_surf = button_font.render("EXIT", True, "black", "white")
         exitRect = exit_surf.get_rect(center=(630 // 6 * 5, 670))
         screen.blit(exit_surf, exitRect)
 
@@ -152,14 +152,18 @@ def main():
                 x, y = event.pos
                 # row and col set from x and y
                 # redraw the board each time the user selects a cell to redraw the cell's rectangle
-                '''if resetRect.collidepoint(event.pos): ---> 
+                if resetRect.collidepoint(event.pos):
+                    print("yes")
                     board.reset_to_original()
-                    return
-                '''
-                if restartRect.collidepoint(event.pos):
+                    board.draw()
+                    continue
+
+                elif restartRect.collidepoint(event.pos):
                     main()
-                    return
-                if exitRect.collidepoint(event.pos):
+                    continue
+
+
+                elif exitRect.collidepoint(event.pos):
                     sys.exit()
 
                 board.draw()
