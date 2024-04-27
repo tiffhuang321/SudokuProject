@@ -138,9 +138,12 @@ class Board:
 
     # returns True if there are no more empty cells, else False
     def is_full(self):
-        if self.find_empty is None:
-            return True
-        return False
+        # if self.find_empty is None:
+        #     return True
+        # return False
+
+        empty_cell = self.find_empty()
+        return empty_cell is None
 
     # updates self.board[1], which is where the main board values are taken and drawn
     def update_board(self):
